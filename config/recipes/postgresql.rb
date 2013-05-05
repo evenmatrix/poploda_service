@@ -1,8 +1,8 @@
 set_default(:postgresql_host, "localhost")
-set_default(:pool_size, "17")
-set_default(:postgresql_user, "antrees")
+set_default(:pool_size, "10")
+set_default(:postgresql_user, "pop")
 set_default(:postgresql_password) { Capistrano::CLI.password_prompt "PostgreSQL Password: " }
-set_default(:postgresql_database, "antrees_production" )
+set_default(:postgresql_database, "pop_production" )
 
 namespace :postgresql do
   desc "Generate the database.yml configuration file."

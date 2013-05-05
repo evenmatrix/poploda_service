@@ -2,14 +2,14 @@ require 'torquebox-capistrano-support'
 require 'bundler/capistrano'
 
 load "config/recipes/base"
-load "config/recipes/branch"
+load "config/recipes/poploda"
 load "config/recipes/postgresql"
 
-server "antrees.com", :web, :app, :db, primary: true
+server "poploda.com", :web, :app, :db, primary: true
 
 # SCM
 set :deployer, "deployer"
-set :application,"antrees_service"
+set :application,"poploda_service"
 set :user, "root"
 set :scm, "git"
 set :repository, "git@github.com:evenmatrix/#{application}.git"

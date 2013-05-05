@@ -1,13 +1,12 @@
 services:
-  BranchService:
+  PoplodaService:
     config:
-      name: branch
+      name: poploda
       server_host: <%= server_host %>
       server_port: <%= server_port %>
       sub_domain: <%= sub_domain %>
-      secret: <%= secret %>
+	  domain: <%= "#{sub_domain}.#{server_host}" %>
+	  secret: <%= secret %>
       env: <%= env %>
-      OPENTOK_API_KEY: <%= opentok_api_key %> 
-      OPENTOK_API_SECRET: <%= opentok_api_secret %>
       db: <%= shared_path %>/config/
       log_path: <%= shared_path %>/log/

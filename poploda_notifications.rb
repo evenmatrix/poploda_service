@@ -23,7 +23,7 @@ class  PoplodaNotificationsComponent <  AbstractComponent
     super(false)
     @name=name
     @server_domain=server_domain
-    @domain="#{name}.rzaartz.local"
+    @domain=opts["domain"]
     @jid=nil
     @env=opts["env"] || "development"
     @component_manager=nil
