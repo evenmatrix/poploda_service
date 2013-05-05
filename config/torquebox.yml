@@ -1,0 +1,11 @@
+services:
+  PoplodaService:
+    config:
+      name: poploda
+      server_host: localhost
+      server_port: 8888
+      sub_domain: poploda
+      secret: secret
+      env: development
+      db: /Users/charlesokwandu/desktop/project/poploda/config/
+      log_path: /Users/charlesokwandu/desktop/poploda_service/log
