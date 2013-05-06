@@ -53,6 +53,7 @@ post '/notify_transaction' do
     if order
      @poploda_service = fetch( 'service:PoplodaService' )
      jid=$redis.hget("users:#{transaction['phone_number']}","jid")
+     puts "JID : #{jid}"
      @poploda_service.notify_transaction(jid,order)
     end
 end
