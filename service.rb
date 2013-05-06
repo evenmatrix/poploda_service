@@ -7,7 +7,7 @@ require 'redis'
 require 'active_record'
 require 'attr_encrypted'
 require 'state_machine'
-require 'YAML'
+require 'yaml'
 
 
 class Service < Sinatra::Base
