@@ -48,6 +48,7 @@ class  PoplodaNotificationsComponent <  AbstractComponent
   
   def notify_transaction(jid,order)
     begin
+    @logger.info "begin notify sending:#{jid}"
     message=create_notificaion_message_from_order(order)
     send_notification(jid,message)
     rescue Exception => e
@@ -89,6 +90,7 @@ class  PoplodaNotificationsComponent <  AbstractComponent
 
   def send_notification(jid,message)
     #jid=@redis.hget("users:#{phone_number}","jid")
+    @logger.info "jid sending:#{jid}"
     if(!jid.nil?)
       from_jid= JID.new(@domain)
       message.to=JID.new(jid)
