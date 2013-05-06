@@ -1,3 +1,5 @@
+environment:
+    db:development
 services:
   PoplodaService:
     config:

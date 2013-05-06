@@ -19,9 +19,8 @@ class Service < Sinatra::Base
   configure do
     puts "STARTING"
     ActiveRecord::ConnectionAdapters::ConnectionManagement
-    env =  "development"
     databases = YAML.load_file("config/database.yml")
-    ActiveRecord::Base.establish_connection(databases[env])
+    ActiveRecord::Base.establish_connection(databases[ENV['db']])
     require "models/interswitch_helper"
     require "models/airtime"
     require "models/order"
