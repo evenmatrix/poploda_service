@@ -123,7 +123,7 @@ class  PoplodaNotificationsComponent <  AbstractComponent
       item.add_attribute "date",order.created_at.to_time.to_i.to_s
       item.add_attribute "response-description",order.response_description
       item.add_attribute "response-code",order.response_code
-     case order.item_type
+     case order.item_type && order.success?
            when "Wallet"
               message.set_subject "Your Wallet Has Been Loaded"
               message.set_body "NGN #{order.amount.to_i.to_s} has been credited to your wallet"
