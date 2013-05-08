@@ -1,0 +1,21 @@
+interswitch:
+    messages:
+      00: Approved by Financial Institution
+      51: Insufficient Funds
+      54: Expired card
+      55: Incorrect PIN
+      12: Invalid Transaction
+      17: Customer Cancellation
+      13: Invalid Amount
+      14: Invalid Card Number
+      15: No Such Financial Institution
+
+wallet:
+    messages:
+        W00: Transaction Successful
+        W02: Insufficient Funds
+        W03: Transaction Error
+    description:
+        W00: Your transaction was successful
+        W02: You do not have enough funds to process this transaction
+        W03: Invalid Transaction

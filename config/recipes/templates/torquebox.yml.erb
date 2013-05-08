@@ -1,5 +1,5 @@
 environment:
-    db:development
+    db: development
 services:
   PoplodaService:
     config:
@@ -7,7 +7,7 @@ services:
       server_host: <%= server_host %>
       server_port: <%= server_port %>
       sub_domain: <%= sub_domain %>
-	  domain: push.rzaartz.local
+	  domain: push.poploda.com
 	  secret: <%= secret %>
       env: <%= env %>
       db: <%= shared_path %>/config/

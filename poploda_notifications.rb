@@ -13,8 +13,11 @@ import org.xmpp.packet.PacketError::Condition
 import org.xmpp.component.ComponentException
 import org.dom4j.Element;
 
+require "#{File.dirname(__FILE__)}/models/response_messages"
+require "#{File.dirname(__FILE__)}/models/orders_helper"
 
 class  PoplodaNotificationsComponent <  AbstractComponent
+  include OrdersHelper
   NS_NOTIFICATIONS = "http://poploda.com/notifications"
   #NS_NOTIFICATION_ITEM = "http://poploda.com/notifications/item"
 
@@ -48,7 +51,6 @@ class  PoplodaNotificationsComponent <  AbstractComponent
   
   def notify_transaction(jid,order)
     begin
-    @logger.info "begin notify sending:#{jid}"
     message=create_notificaion_message_from_order(order)
     send_notification(jid,message)
     rescue Exception => e
@@ -90,7 +92,6 @@ class  PoplodaNotificationsComponent <  AbstractComponent
 
   def send_notification(jid,message)
     #jid=@redis.hget("users:#{phone_number}","jid")
-    @logger.info "jid sending:#{jid}"
     if(!jid.nil?)
       from_jid= JID.new(@domain)
       message.to=JID.new(jid)
@@ -125,15 +126,18 @@ class  PoplodaNotificationsComponent <  AbstractComponent
       item.add_attribute "date",order.created_at.to_time.to_i.to_s
       item.add_attribute "response-description",order.response_description
       item.add_attribute "response-code",order.response_code
-     case order.item_type && order.success?
+      if order.success?
+        case order.item_type
            when "Wallet"
-              message.set_subject "Your Wallet Has Been Loaded"
-              message.set_body "NGN #{order.amount.to_i.to_s} has been credited to your wallet"
+              status=order_status(order,{:message=>"Your Wallet Has Been Credited",:description=>"NGN #{order.amount.to_i.to_s} has been credited to your wallet"})
+              message.set_subject status[:message]
+              message.set_body status[:description]
               wallet=item.add_element("wallet");
               add_wallet_attributes(wallet,order)
-           when "Airtime"
-              message.set_subject "#{order.item.name.upcase} recharge successful"
-              message.set_body "your pin is #{order.item.pin}.Thank you! "
+          when "Airtime"
+              status=order_status(order,{:message=>"#{order.item.name.upcase} recharge successful",:description=>"your pin is #{order.item.pin}.Thank you! "})
+              message.set_subject status[:message]
+              message.set_body status[:description]
               airtime=item.add_element("airtime");
               airtime.add_attribute "pin",order.item.pin
               airtime.add_attribute "dial",order.item.one_click.to_s
@@ -142,6 +146,10 @@ class  PoplodaNotificationsComponent <  AbstractComponent
                 add_wallet_attributes(wallet,order)
               end
        end
+     else  
+           message.set_subject "Transaction Failed"
+           message.set_body order.response_description
+     end
    end
 
    def add_wallet_attributes(wallet,order)
@@ -232,7 +240,7 @@ class  PoplodaNotificationsComponent <  AbstractComponent
       @logger = TorqueBox::Logger.new( self.class )
     end 
     if @env == "production"
-      path = File.join(log_path, 'branch.log')
+      path = File.join(log_path, 'poploda.log')
       file = File.open(path, File::WRONLY | File::APPEND | File::CREAT)
       file.sync = true
       @logger = Logger.new(file)
