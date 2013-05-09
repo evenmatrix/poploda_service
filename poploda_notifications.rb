@@ -147,8 +147,9 @@ class  PoplodaNotificationsComponent <  AbstractComponent
               end
        end
      else  
-           message.set_subject "Transaction Failed"
-           message.set_body order.response_description
+           status=order_status(order)
+           message.set_subject status[:message]
+           message.set_body status[:description]
      end
    end
 
