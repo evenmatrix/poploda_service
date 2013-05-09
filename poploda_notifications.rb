@@ -155,7 +155,7 @@ class  PoplodaNotificationsComponent <  AbstractComponent
 
    def add_wallet_attributes(wallet,order)
      wallet.add_attribute "account-balance",order.item.account_balance.to_s
-     wallet.add_attribute "account-balance-currency","NGN #{order.amount.to_i.to_s}"
+     wallet.add_attribute "account-balance-currency","NGN #{order.item.account_balance.to_i.to_s}"
      wallet.add_attribute "touch",order.item.updated_at.to_time.to_i.to_s
    end
    
