@@ -8,6 +8,7 @@ require 'active_record'
 require 'attr_encrypted'
 require 'state_machine'
 require 'yaml'
+require "#{File.dirname(__FILE__)}/models/active_user"
 
 
 class Service < Sinatra::Base
@@ -21,41 +22,23 @@ class Service < Sinatra::Base
     ActiveRecord::ConnectionAdapters::ConnectionManagement
     databases = YAML.load_file("config/database.yml")
     ActiveRecord::Base.establish_connection(databases[ENV['db']])
-    require "models/interswitch_helper"
-    require "models/airtime"
-    require "models/order"
-    require "models/user"
-    require "models/wallet"
-    require "models/purchase_order"
-    require "models/money_order"
-    $redis = Redis.new(:host => 'localhost', :port => 6379)
-  end
+   end
 
   get "/foo"  do
     session[:message] ="Helloworld"
     redirect to("push")
   end
 
-get '/push' do
-  order=Order.includes([{:user=>:wallet},:item]).find_by_transaction_id(params[:transaction_id])
-  if order
-   @poploda_service = fetch( 'service:PoplodaService' )
-   jid=$redis.hget("users:#{params[:phone_number]}","jid")
-   @poploda_service.notify_transaction(jid,order)
-  end
-  session[:message]
-end
 
-post '/notify_transaction' do
-    transaction = JSON.parse(request.body.read)
-    puts "STARTING TRANSACTION : #{transaction}"
-    order=Order.includes([{:user=>:wallet},:item]).find_by_transaction_id(transaction['transaction_id'])
-    if order
-     @poploda_service = fetch( 'service:PoplodaService' )
-     jid=$redis.hget("users:#{transaction['phone_number']}","jid")
-     puts "JID : #{jid}"
-     @poploda_service.notify_transaction(jid,order)
-    end
+
+post '/notify' do
+  json = JSON.parse(request.body.read)
+  puts "STARTING NOTIFICATION : #{request.body.read}"
+  @poploda_service = fetch( 'service:PoplodaService' )
+  active_user=ActiveUser.find_by_phone_number(params[:phone_number])
+  if active_user
+    @poploda_service.notify_json(active_user.jid,json.to_json)
+  end
 end
 
 end

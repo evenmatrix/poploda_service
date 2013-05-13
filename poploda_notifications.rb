@@ -13,11 +13,9 @@ import org.xmpp.packet.PacketError::Condition
 import org.xmpp.component.ComponentException
 import org.dom4j.Element;
 
-require "#{File.dirname(__FILE__)}/models/response_messages"
-require "#{File.dirname(__FILE__)}/models/orders_helper"
+require "#{File.dirname(__FILE__)}/models/active_user"
 
 class  PoplodaNotificationsComponent <  AbstractComponent
-  include OrdersHelper
   NS_NOTIFICATIONS = "http://poploda.com/notifications"
   #NS_NOTIFICATION_ITEM = "http://poploda.com/notifications/item"
 
@@ -29,9 +27,12 @@ class  PoplodaNotificationsComponent <  AbstractComponent
     @domain=opts["domain"]
     @jid=nil
     @env=opts["env"] || "development"
+    ActiveRecord::ConnectionAdapters::ConnectionManagement
+    databases = YAML.load_file("config/database.yml")
+    ActiveRecord::Base.establish_connection(databases[@env])
     @component_manager=nil
     @last_start_millis=nil
-    @redis =Redis.new(:host => 'localhost', :port => 6379)
+    #@redis =Redis.new(:host => 'localhost', :port => 6379)
     set_up_logger(opts["log_path"])
   end
 
@@ -49,16 +50,18 @@ class  PoplodaNotificationsComponent <  AbstractComponent
     @domain
   end
   
-  def notify_transaction(jid,order)
+
+
+  def notify_json(jid,json)
     begin
-    message=create_notificaion_message_from_order(order)
+     message=Message.new
+     item = message.add_child_element("json",NS_NOTIFICATIONS);
+     item.setText(json);
     send_notification(jid,message)
     rescue Exception => e
       @logger.error "Error :,#{e.message}"
     end
-  end
-
- 
+  end 
 
   protected
 
@@ -91,6 +94,7 @@ class  PoplodaNotificationsComponent <  AbstractComponent
   end
 
   def send_notification(jid,message)
+  @logger.info "sending:#{message.to_xml}"
     #jid=@redis.hget("users:#{phone_number}","jid")
     if(!jid.nil?)
       from_jid= JID.new(@domain)
@@ -100,64 +104,7 @@ class  PoplodaNotificationsComponent <  AbstractComponent
       send(message)
     end
   end
-  
-  def create_notificaion_message_from_order(order)
-     message=Message.new
-     add_message_attributes_for_transaction(order,message)
-     date = message.add_child_element("date",NS_NOTIFICATIONS);
-     date.setText(order.created_at.to_time.to_i.to_s);
-     formatted_date = message.add_child_element("formatted-date",NS_NOTIFICATIONS);
-     date_format="#{order.created_at.strftime('%a %d %b %Y')} #{order.created_at.strftime("%I:%M%p")}"
-     formatted_date.setText(date_format);
-     return message
-   end
-   
-   def add_message_attributes_for_transaction(order,message)
-      elem = message.add_child_element("notification",NS_NOTIFICATIONS);
-      elem.add_attribute "type","transaction"
-      item=elem.add_element("item");
-      item.add_attribute "transaction-id",order.transaction_id.to_s
-      item.add_attribute "item-type",order.item_type
-      item.add_attribute "name",order.name
-      item.add_attribute "payment-method",order.payment_method
-      item.add_attribute "amount",order.amount.to_s
-      item.add_attribute "amount-currency","NGN #{order.amount.to_i.to_s}"
-      item.add_attribute "state",order.state
-      item.add_attribute "date",order.created_at.to_time.to_i.to_s
-      item.add_attribute "response-description",order.response_description
-      item.add_attribute "response-code",order.response_code
-      if order.success?
-        case order.item_type
-           when "Wallet"
-              status=order_status(order,{:message=>"Your Wallet Has Been Credited",:description=>"NGN #{order.amount.to_i.to_s} has been credited to your wallet"})
-              message.set_subject status[:message]
-              message.set_body status[:description]
-              wallet=item.add_element("wallet");
-              add_wallet_attributes(wallet,order)
-          when "Airtime"
-              status=order_status(order,{:message=>"#{order.item.name.upcase} recharge successful",:description=>"your pin is #{order.item.pin}.Thank you! "})
-              message.set_subject status[:message]
-              message.set_body status[:description]
-              airtime=item.add_element("airtime");
-              airtime.add_attribute "pin",order.item.pin
-              airtime.add_attribute "dial",order.item.one_click.to_s
-              if(order.payment_method=="wallet")
-                wallet=item.add_element("wallet");
-                add_wallet_attributes(wallet,order)
-              end
-       end
-     else  
-           status=order_status(order)
-           message.set_subject status[:message]
-           message.set_body status[:description]
-     end
-   end
 
-   def add_wallet_attributes(wallet,order)
-     wallet.add_attribute "account-balance",order.item.account_balance.to_s
-     wallet.add_attribute "account-balance-currency","NGN #{order.item.account_balance.to_i.to_s}"
-     wallet.add_attribute "touch",order.item.updated_at.to_time.to_i.to_s
-   end
    
   def handlePresence(presence)
     begin
@@ -169,9 +116,9 @@ class  PoplodaNotificationsComponent <  AbstractComponent
         available_presence(presence)
       end
     rescue Exception => e
-      puts "Error :,#{e.message}"
-      puts $!.backtrace.collect { |b| " > #{b}" }.join("\n")
+      @logger.error "Error :,#{e.message}"
     ensure
+      close_connection
     end
   end
 
@@ -198,9 +145,10 @@ class  PoplodaNotificationsComponent <  AbstractComponent
     from=  presence.from
     phone_number = to.node
     puts "unavailable #{presence.from}"
-    jid=@redis.hget("users:#{phone_number}","jid")
-    if(jid == presence.from.to_s)
-      @redis.del("users:#{phone_number}")
+    #jid=@redis.hget("users:#{phone_number}","jid")
+    active_user=ActiveUser.find_by_phone_number(phone_number)
+    if active_user && active_user.jid==presence.from.to_s
+      active_user.destroy
     end
   end
 
@@ -212,7 +160,9 @@ class  PoplodaNotificationsComponent <  AbstractComponent
     from=  presence.from
     phone_number= to.node;
     puts "available #{presence.from}"
-    @redis.hset("users:#{phone_number}","jid",from.to_s)
+    active_user=ActiveUser.create({:jid=>from.to_s,:phone_number=>phone_number})
+    @logger.info "Active user id #{active_user.id}"
+    #@redis.hset("users:#{phone_number}","jid",from.to_s)
   end
 
   def handle_presence_error(presence)
@@ -220,10 +170,6 @@ class  PoplodaNotificationsComponent <  AbstractComponent
   
   def notify
   end
-  
-
-  
-
   
   def send(packet)
     begin
@@ -248,7 +194,8 @@ class  PoplodaNotificationsComponent <  AbstractComponent
       @logger.level = Logger::DEBUG
     end
   end
-  
+
   def close_connection
+    ActiveRecord::Base.connection.close
   end
 end

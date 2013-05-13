@@ -60,6 +60,10 @@ class PoplodaService
    @component.notify_transaction(phone_number,order)
   end
 
+  def notify_json(phone_number,json)
+   @component.notify_json(phone_number,json)
+  end
+  
   def set_up_logger(log_path)
     if @env == "development"
       @logger = TorqueBox::Logger.new( self.class )
