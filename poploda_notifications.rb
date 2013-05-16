@@ -160,7 +160,13 @@ class  PoplodaNotificationsComponent <  AbstractComponent
     from=  presence.from
     phone_number= to.node;
     puts "available #{presence.from}"
-    active_user=ActiveUser.create({:jid=>from.to_s,:phone_number=>phone_number})
+    active_user=ActiveUser.find_by_phone_number(phone_number)
+    if active_user
+      active_user.jid=from.to_s
+      active_user.save
+    else
+      active_user=ActiveUser.create({:jid=>from.to_s,:phone_number=>phone_number})
+    end
     @logger.info "Active user id #{active_user.id}"
     #@redis.hset("users:#{phone_number}","jid",from.to_s)
   end
