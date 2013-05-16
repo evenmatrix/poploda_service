@@ -33,10 +33,10 @@ class Service < Sinatra::Base
 
 post '/notify' do
   json = JSON.parse(request.body.read)
-  puts "STARTING NOTIFICATION : #{request.body.read}"
   @poploda_service = fetch( 'service:PoplodaService' )
   active_user=ActiveUser.find_by_phone_number(params[:phone_number])
   if active_user
+    puts "STARTING NOTIFICATION : #{json.to_json} ==> #{active_user.jid}"
     @poploda_service.notify_json(active_user.jid,json.to_json)
   end
 end
