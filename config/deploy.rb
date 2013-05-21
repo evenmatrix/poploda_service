@@ -12,7 +12,7 @@ server "poploda.com", :web, :app, :db, primary: true
 # SCM
 set :deployer, "deployer"
 set :application,"poploda_service"
-set :user, "root"
+set :user, "deployer"
 set :scm, "git"
 set :repository, "git@github.com:evenmatrix/#{application}.git"
 set :scm_verbose,       true
