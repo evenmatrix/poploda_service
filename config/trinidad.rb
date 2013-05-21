@@ -1,4 +1,5 @@
 set_default(:trinidad_config_path) { "#{shared_path}/config/trinidad.yml" }
+set_default :ruby_version, "jruby-1.7.3"
 
 set_default :trinidad_config do
   {

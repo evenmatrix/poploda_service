@@ -2,7 +2,6 @@ require 'bundler/capistrano'
 
 load "config/recipes/base"
 load "config/recipes/nginx"
-load "config/recipes/unicorn"
 load "config/recipes/poploda"
 #load "config/recipes/postgresql"
 load "config/recipes/trinidad"
@@ -21,7 +20,7 @@ set :scm_username, "evenmatrix@gmail.com"
 set :branch, "master"
 set :git_enable_submodules, 1
 
-set_default :ruby_version, "jruby-1.7.3"
+
 default_run_options[:pty] = true
 ssh_options[:forward_agent] = true
 ssh_options[:paranoid] = true
