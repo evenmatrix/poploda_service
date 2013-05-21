@@ -2,26 +2,23 @@
 require 'rubygems'
 require 'bundler/setup'
 require 'sinatra'
-require 'torquebox'
-require 'redis'
 require 'active_record'
-require 'attr_encrypted'
-require 'state_machine'
+require 'logger'
 require 'yaml'
-require "#{File.dirname(__FILE__)}/models/active_user"
+require "models/active_user"
+require "poploda_service"
 
 
 class Service < Sinatra::Base
-  include TorqueBox::Injectors
-  use TorqueBox::Session::ServletStore
   
-
- 
   configure do
     puts "STARTING"
     ActiveRecord::ConnectionAdapters::ConnectionManagement
     databases = YAML.load_file("config/database.yml")
-    ActiveRecord::Base.establish_connection(databases[ENV['db']])
+    poploda_config = YAML.load_file("config/poploda.yml")
+    ActiveRecord::Base.establish_connection(databases[poploda_config['env']])
+    @service= PoplodaService.instance
+    @service.start
    end
 
   get "/foo"  do
@@ -41,5 +38,9 @@ post '/notify' do
   end
 end
 
+at_exit do
+  puts "SHUTTING DOWN"
+  @service.stop
+end
 end
 

@@ -1,8 +1,7 @@
 require 'rubygems'
 require 'active_record'
-require 'action_view'
-require 'redis'
 require 'json'
+require 'logger'
 include Java
 import org.xmpp.component.AbstractComponent
 import org.xmpp.packet.IQ
@@ -189,16 +188,11 @@ class  PoplodaNotificationsComponent <  AbstractComponent
 
   
   def set_up_logger(log_path)
-    if @env == "development"
-      @logger = TorqueBox::Logger.new( self.class )
-    end 
-    if @env == "production"
       path = File.join(log_path, 'poploda.log')
       file = File.open(path, File::WRONLY | File::APPEND | File::CREAT)
       file.sync = true
       @logger = Logger.new(file)
       @logger.level = Logger::DEBUG
-    end
   end
 
   def close_connection

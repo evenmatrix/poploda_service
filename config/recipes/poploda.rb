@@ -8,13 +8,13 @@ namespace :poploda do
   desc "Generate torquebox.yml file."
   task :setup, roles: :app do
     run "mkdir -p #{shared_path}/config"
-    template "torquebox.yml.erb", "#{shared_path}/config/torquebox.yml"
+    template "torquebox.yml.erb", "#{shared_path}/config/poploda.yml"
   end
   after "deploy:setup", "poploda:setup"
   
   desc "Symlink the torquebox.yml file into latest release"
   task :symlink, roles: :app do
-    run "ln -nfs #{shared_path}/config/torquebox.yml #{release_path}/config/torquebox.yml"
+    run "ln -nfs #{shared_path}/config/torquebox.yml #{release_path}/config/poploda.yml"
   end
   after "deploy:finalize_update", "poploda:symlink"
   
