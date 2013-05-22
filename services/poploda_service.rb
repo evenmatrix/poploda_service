@@ -69,7 +69,7 @@ class PoplodaService
       @logger = TorqueBox::Logger.new( self.class )
     end 
     if @env == "production"
-      path = File.join(log_path, 'branch.log')
+      path = File.join(log_path, 'poploda.log')
       file = File.open(path, File::WRONLY | File::APPEND | File::CREAT)
       file.sync = true
       @logger = Logger.new(file)
