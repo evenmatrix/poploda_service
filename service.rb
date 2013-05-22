@@ -5,7 +5,6 @@ require 'sinatra'
 require 'active_record'
 require 'logger'
 require 'yaml'
-require "models/active_user"
 require "#{File.dirname(__FILE__)}/models/active_user"
 require "#{File.dirname(__FILE__)}/poploda_service"
 
