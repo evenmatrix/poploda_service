@@ -38,6 +38,7 @@ class PoplodaService
 
   def start
     begin
+    puts "START"
     @manager.addComponent @sub_domain,@component
     rescue ComponentException => e
     @logger.error e
@@ -47,6 +48,7 @@ class PoplodaService
   def stop
     begin
     @manager.removeComponent @sub_domain
+    puts "STOP"
     rescue ComponentException=>e
       @logger.error e
     end

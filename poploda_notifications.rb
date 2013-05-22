@@ -86,6 +86,7 @@ class  PoplodaNotificationsComponent <  AbstractComponent
   end
 
   def handle_error_message(message)
+    puts "ERROR MESSAGE #{message.to_xml}"
   end
 
   def handle_group_chat_message(message)
@@ -93,13 +94,11 @@ class  PoplodaNotificationsComponent <  AbstractComponent
   end
 
   def send_notification(jid,message)
-  @logger.info "sending:#{message.to_xml}"
-    #jid=@redis.hget("users:#{phone_number}","jid")
     if(!jid.nil?)
       from_jid= JID.new(@domain)
       message.to=JID.new(jid)
       message.from=from_jid
-      @logger.info "sending:#{message.to_xml}"
+      puts "sending:#{message.to_xml}"
       send(message)
     end
   end
@@ -166,8 +165,12 @@ class  PoplodaNotificationsComponent <  AbstractComponent
     else
       active_user=ActiveUser.create({:jid=>from.to_s,:phone_number=>phone_number})
     end
-    @logger.info "Active user id #{active_user.id}"
-    #@redis.hset("users:#{phone_number}","jid",from.to_s)
+    message=Message.new
+    message.setBody("we got ur presence")
+    message.from=to
+    message.to=from
+    puts "sending #{message.to_xml}"
+    send message
   end
 
   def handle_presence_error(presence)
