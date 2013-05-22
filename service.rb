@@ -17,8 +17,8 @@ class Service < Sinatra::Base
     databases = YAML.load_file(File.join(File.dirname(__FILE__), "config/database.yml"))
     poploda_config = YAML.load_file(File.join(File.dirname(__FILE__),"config/poploda.yml"))
     ActiveRecord::Base.establish_connection(databases[poploda_config['env']])
-    #@service= PoplodaService.instance
-    #@service.start
+    @service= PoplodaService.instance
+    @service.start
    end
 
   get "/foo"  do
@@ -40,7 +40,12 @@ end
 
 at_exit do
   puts "SHUTTING DOWN"
-  #@service.stop
+  @service.stop
 end
+
+# $0 is the executed file
+# __FILE__ is the current file
+run! if __FILE__ == $0
+
 end
 
