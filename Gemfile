@@ -5,7 +5,8 @@ gem 'activerecord-jdbcpostgresql-adapter'
 gem 'jruby-openssl'
 gem 'sinatra'
 gem 'activerecord'
-gem 'rails'
+gem 'rake'
+gem 'trinidad', require: false
 
 
 

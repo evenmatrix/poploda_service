@@ -23,15 +23,21 @@ GEM
     jdbc-postgres (9.2.1002.1)
     jruby-openssl (0.8.8)
       bouncy-castle-java (>= 1.5.0147)
+    jruby-rack (1.1.13.2)
     multi_json (1.7.3)
     rack (1.5.2)
     rack-protection (1.5.0)
       rack
+    rake (10.0.4)
     sinatra (1.4.2)
       rack (~> 1.5, >= 1.5.2)
       rack-protection (~> 1.4)
       tilt (~> 1.3, >= 1.3.4)
     tilt (1.4.1)
+    trinidad (1.4.4)
+      jruby-rack (>= 1.1.10)
+      trinidad_jars (>= 1.1.0)
+    trinidad_jars (1.2.3)
     tzinfo (0.3.37)
 
 PLATFORMS
@@ -41,4 +47,6 @@ DEPENDENCIES
   activerecord
   activerecord-jdbcpostgresql-adapter
   jruby-openssl
+  rake
   sinatra
+  trinidad
