@@ -1,0 +1,9 @@
+working_directory "<%= current_path %>"
+pid "<%= unicorn_pid %>"
+stderr_path "<%= unicorn_log %>"
+stdout_path "<%= unicorn_log %>"
+
+listen "/tmp/unicorn.<%= application %>.sock"
+listen 3000, :tcp_nopush => true
+worker_processes <%= unicorn_workers %>
+timeout 30

@@ -4,13 +4,11 @@ source "http://rubygems.org"
 gem 'activerecord-jdbcpostgresql-adapter'
 gem 'jruby-openssl'
 gem 'sinatra'
-gem 'paperclip'
-gem 'ancestry'
-gem 'redis'
-gem 'torquebox'
-gem 'attr_encrypted'
-gem 'state_machine'
-gem 'rails', '3.2.13'
+gem 'activerecord'
+gem 'rake'
+gem 'trinidad', require: false
+gem 'trinidad_lifecycle_extension', :require => false
+
 
 
 

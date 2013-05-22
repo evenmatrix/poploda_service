@@ -1,0 +1,107 @@
+2013-05-22 02:46:06 +0100 INFO: jruby 1.7.3 (1.9.3p385) 2013-02-21 dac429b on Java HotSpot(TM) 64-Bit Server VM 1.6.0_33-b03-424-11M3720 [darwin-x86_64]
+2013-05-22 02:46:06 +0100 INFO: using 1:5 runtime pool with acquire timeout of 5.0 seconds
+2013-05-22 02:46:17 +0100 INFO: added application to pool, size now = 1
+2013-05-22 03:06:21 +0100 INFO: jruby 1.7.3 (1.9.3p385) 2013-02-21 dac429b on Java HotSpot(TM) 64-Bit Server VM 1.6.0_33-b03-424-11M3720 [darwin-x86_64]
+2013-05-22 03:06:21 +0100 INFO: using 1:5 runtime pool with acquire timeout of 5.0 seconds
+2013-05-22 03:06:36 +0100 INFO: added application to pool, size now = 1
+2013-05-22 03:10:07 +0100 INFO: jruby 1.7.3 (1.9.3p385) 2013-02-21 dac429b on Java HotSpot(TM) 64-Bit Server VM 1.6.0_33-b03-424-11M3720 [darwin-x86_64]
+2013-05-22 03:10:07 +0100 INFO: using 1:5 runtime pool with acquire timeout of 5.0 seconds
+2013-05-22 03:10:15 +0100 INFO: added application to pool, size now = 1
+2013-05-22 03:11:20 +0100 INFO: jruby 1.7.3 (1.9.3p385) 2013-02-21 dac429b on Java HotSpot(TM) 64-Bit Server VM 1.6.0_33-b03-424-11M3720 [darwin-x86_64]
+2013-05-22 03:11:20 +0100 INFO: using 1:5 runtime pool with acquire timeout of 5.0 seconds
+2013-05-22 03:11:29 +0100 INFO: added application to pool, size now = 1
+2013-05-22 03:20:52 +0100 INFO: NoMethodError - undefined method `fetch' for #<Service:0x4888884e>:
+	/Users/charlesokwandu/Desktop/poploda_service/service.rb:34:in `POST /notify'
+	org/jruby/RubyMethod.java:118:in `call'
+	/Users/charlesokwandu/.rbenv/versions/jruby-1.7.3/lib/ruby/gems/shared/gems/sinatra-1.4.2/lib/sinatra/base.rb:1415:in `compile!'
+	org/jruby/RubyProc.java:249:in `call'
+	/Users/charlesokwandu/.rbenv/versions/jruby-1.7.3/lib/ruby/gems/shared/gems/sinatra-1.4.2/lib/sinatra/base.rb:944:in `route!'
+	/Users/charlesokwandu/.rbenv/versions/jruby-1.7.3/lib/ruby/gems/shared/gems/sinatra-1.4.2/lib/sinatra/base.rb:960:in `route_eval'
+	/Users/charlesokwandu/.rbenv/versions/jruby-1.7.3/lib/ruby/gems/shared/gems/sinatra-1.4.2/lib/sinatra/base.rb:944:in `route!'
+	/Users/charlesokwandu/.rbenv/versions/jruby-1.7.3/lib/ruby/gems/shared/gems/sinatra-1.4.2/lib/sinatra/base.rb:981:in `process_route'
+	org/jruby/RubyKernel.java:1174:in `catch'
+	/Users/charlesokwandu/.rbenv/versions/jruby-1.7.3/lib/ruby/gems/shared/gems/sinatra-1.4.2/lib/sinatra/base.rb:979:in `process_route'
+	/Users/charlesokwandu/.rbenv/versions/jruby-1.7.3/lib/ruby/gems/shared/gems/sinatra-1.4.2/lib/sinatra/base.rb:943:in `route!'
+	org/jruby/RubyArray.java:1613:in `each'
+	/Users/charlesokwandu/.rbenv/versions/jruby-1.7.3/lib/ruby/gems/shared/gems/sinatra-1.4.2/lib/sinatra/base.rb:942:in `route!'
+	/Users/charlesokwandu/.rbenv/versions/jruby-1.7.3/lib/ruby/gems/shared/gems/sinatra-1.4.2/lib/sinatra/base.rb:1053:in `dispatch!'
+	/Users/charlesokwandu/.rbenv/versions/jruby-1.7.3/lib/ruby/gems/shared/gems/sinatra-1.4.2/lib/sinatra/base.rb:1035:in `invoke'
+	org/jruby/RubyKernel.java:1174:in `catch'
+	/Users/charlesokwandu/.rbenv/versions/jruby-1.7.3/lib/ruby/gems/shared/gems/sinatra-1.4.2/lib/sinatra/base.rb:1035:in `invoke'
+	/Users/charlesokwandu/.rbenv/versions/jruby-1.7.3/lib/ruby/gems/shared/gems/sinatra-1.4.2/lib/sinatra/base.rb:1050:in `dispatch!'
+	/Users/charlesokwandu/.rbenv/versions/jruby-1.7.3/lib/ruby/gems/shared/gems/sinatra-1.4.2/lib/sinatra/base.rb:878:in `call!'
+	/Users/charlesokwandu/.rbenv/versions/jruby-1.7.3/lib/ruby/gems/shared/gems/sinatra-1.4.2/lib/sinatra/base.rb:1035:in `invoke'
+	org/jruby/RubyKernel.java:1174:in `catch'
+	/Users/charlesokwandu/.rbenv/versions/jruby-1.7.3/lib/ruby/gems/shared/gems/sinatra-1.4.2/lib/sinatra/base.rb:1035:in `invoke'
+	/Users/charlesokwandu/.rbenv/versions/jruby-1.7.3/lib/ruby/gems/shared/gems/sinatra-1.4.2/lib/sinatra/base.rb:878:in `call!'
+	/Users/charlesokwandu/.rbenv/versions/jruby-1.7.3/lib/ruby/gems/shared/gems/sinatra-1.4.2/lib/sinatra/base.rb:864:in `call'
+	/Users/charlesokwandu/.rbenv/versions/jruby-1.7.3/lib/ruby/gems/shared/gems/rack-protection-1.5.0/lib/rack/protection/xss_header.rb:18:in `call'
+	/Users/charlesokwandu/.rbenv/versions/jruby-1.7.3/lib/ruby/gems/shared/gems/rack-protection-1.5.0/lib/rack/protection/path_traversal.rb:16:in `call'
+	/Users/charlesokwandu/.rbenv/versions/jruby-1.7.3/lib/ruby/gems/shared/gems/rack-protection-1.5.0/lib/rack/protection/json_csrf.rb:18:in `call'
+	/Users/charlesokwandu/.rbenv/versions/jruby-1.7.3/lib/ruby/gems/shared/gems/rack-protection-1.5.0/lib/rack/protection/base.rb:49:in `call'
+	/Users/charlesokwandu/.rbenv/versions/jruby-1.7.3/lib/ruby/gems/shared/gems/rack-protection-1.5.0/lib/rack/protection/base.rb:49:in `call'
+	/Users/charlesokwandu/.rbenv/versions/jruby-1.7.3/lib/ruby/gems/shared/gems/rack-protection-1.5.0/lib/rack/protection/frame_options.rb:31:in `call'
+	/Users/charlesokwandu/.rbenv/versions/jruby-1.7.3/lib/ruby/gems/shared/gems/rack-1.5.2/lib/rack/nulllogger.rb:9:in `call'
+	/Users/charlesokwandu/.rbenv/versions/jruby-1.7.3/lib/ruby/gems/shared/gems/rack-1.5.2/lib/rack/head.rb:11:in `call'
+	/Users/charlesokwandu/.rbenv/versions/jruby-1.7.3/lib/ruby/gems/shared/gems/sinatra-1.4.2/lib/sinatra/showexceptions.rb:21:in `call'
+	/Users/charlesokwandu/.rbenv/versions/jruby-1.7.3/lib/ruby/gems/shared/gems/sinatra-1.4.2/lib/sinatra/base.rb:172:in `call'
+	/Users/charlesokwandu/.rbenv/versions/jruby-1.7.3/lib/ruby/gems/shared/gems/sinatra-1.4.2/lib/sinatra/base.rb:1947:in `call'
+	/Users/charlesokwandu/.rbenv/versions/jruby-1.7.3/lib/ruby/gems/shared/gems/sinatra-1.4.2/lib/sinatra/base.rb:1610:in `call'
+	/Users/charlesokwandu/.rbenv/versions/jruby-1.7.3/lib/ruby/gems/shared/gems/sinatra-1.4.2/lib/sinatra/base.rb:1693:in `synchronize'
+	/Users/charlesokwandu/.rbenv/versions/jruby-1.7.3/lib/ruby/gems/shared/gems/sinatra-1.4.2/lib/sinatra/base.rb:1610:in `call'
+	file:/Users/charlesokwandu/.rbenv/versions/jruby-1.7.3/lib/ruby/gems/shared/gems/jruby-rack-1.1.13.2/lib/jruby-rack-1.1.13.2.jar!/rack/handler/servlet.rb:22:in `call'
+2013-05-22 03:22:54 +0100 INFO: jruby 1.7.3 (1.9.3p385) 2013-02-21 dac429b on Java HotSpot(TM) 64-Bit Server VM 1.6.0_33-b03-424-11M3720 [darwin-x86_64]
+2013-05-22 03:22:54 +0100 INFO: using 1:5 runtime pool with acquire timeout of 5.0 seconds
+2013-05-22 03:23:09 +0100 INFO: added application to pool, size now = 1
+2013-05-22 03:23:37 +0100 INFO: NoMethodError - undefined method `notify_json' for nil:NilClass:
+	/Users/charlesokwandu/Desktop/poploda_service/service.rb:37:in `POST /notify'
+	org/jruby/RubyMethod.java:118:in `call'
+	/Users/charlesokwandu/.rbenv/versions/jruby-1.7.3/lib/ruby/gems/shared/gems/sinatra-1.4.2/lib/sinatra/base.rb:1415:in `compile!'
+	org/jruby/RubyProc.java:249:in `call'
+	/Users/charlesokwandu/.rbenv/versions/jruby-1.7.3/lib/ruby/gems/shared/gems/sinatra-1.4.2/lib/sinatra/base.rb:944:in `route!'
+	/Users/charlesokwandu/.rbenv/versions/jruby-1.7.3/lib/ruby/gems/shared/gems/sinatra-1.4.2/lib/sinatra/base.rb:960:in `route_eval'
+	/Users/charlesokwandu/.rbenv/versions/jruby-1.7.3/lib/ruby/gems/shared/gems/sinatra-1.4.2/lib/sinatra/base.rb:944:in `route!'
+	/Users/charlesokwandu/.rbenv/versions/jruby-1.7.3/lib/ruby/gems/shared/gems/sinatra-1.4.2/lib/sinatra/base.rb:981:in `process_route'
+	org/jruby/RubyKernel.java:1174:in `catch'
+	/Users/charlesokwandu/.rbenv/versions/jruby-1.7.3/lib/ruby/gems/shared/gems/sinatra-1.4.2/lib/sinatra/base.rb:979:in `process_route'
+	/Users/charlesokwandu/.rbenv/versions/jruby-1.7.3/lib/ruby/gems/shared/gems/sinatra-1.4.2/lib/sinatra/base.rb:943:in `route!'
+	org/jruby/RubyArray.java:1613:in `each'
+	/Users/charlesokwandu/.rbenv/versions/jruby-1.7.3/lib/ruby/gems/shared/gems/sinatra-1.4.2/lib/sinatra/base.rb:942:in `route!'
+	/Users/charlesokwandu/.rbenv/versions/jruby-1.7.3/lib/ruby/gems/shared/gems/sinatra-1.4.2/lib/sinatra/base.rb:1053:in `dispatch!'
+	/Users/charlesokwandu/.rbenv/versions/jruby-1.7.3/lib/ruby/gems/shared/gems/sinatra-1.4.2/lib/sinatra/base.rb:1035:in `invoke'
+	org/jruby/RubyKernel.java:1174:in `catch'
+	/Users/charlesokwandu/.rbenv/versions/jruby-1.7.3/lib/ruby/gems/shared/gems/sinatra-1.4.2/lib/sinatra/base.rb:1035:in `invoke'
+	/Users/charlesokwandu/.rbenv/versions/jruby-1.7.3/lib/ruby/gems/shared/gems/sinatra-1.4.2/lib/sinatra/base.rb:1050:in `dispatch!'
+	/Users/charlesokwandu/.rbenv/versions/jruby-1.7.3/lib/ruby/gems/shared/gems/sinatra-1.4.2/lib/sinatra/base.rb:878:in `call!'
+	/Users/charlesokwandu/.rbenv/versions/jruby-1.7.3/lib/ruby/gems/shared/gems/sinatra-1.4.2/lib/sinatra/base.rb:1035:in `invoke'
+	org/jruby/RubyKernel.java:1174:in `catch'
+	/Users/charlesokwandu/.rbenv/versions/jruby-1.7.3/lib/ruby/gems/shared/gems/sinatra-1.4.2/lib/sinatra/base.rb:1035:in `invoke'
+	/Users/charlesokwandu/.rbenv/versions/jruby-1.7.3/lib/ruby/gems/shared/gems/sinatra-1.4.2/lib/sinatra/base.rb:878:in `call!'
+	/Users/charlesokwandu/.rbenv/versions/jruby-1.7.3/lib/ruby/gems/shared/gems/sinatra-1.4.2/lib/sinatra/base.rb:864:in `call'
+	/Users/charlesokwandu/.rbenv/versions/jruby-1.7.3/lib/ruby/gems/shared/gems/rack-protection-1.5.0/lib/rack/protection/xss_header.rb:18:in `call'
+	/Users/charlesokwandu/.rbenv/versions/jruby-1.7.3/lib/ruby/gems/shared/gems/rack-protection-1.5.0/lib/rack/protection/path_traversal.rb:16:in `call'
+	/Users/charlesokwandu/.rbenv/versions/jruby-1.7.3/lib/ruby/gems/shared/gems/rack-protection-1.5.0/lib/rack/protection/json_csrf.rb:18:in `call'
+	/Users/charlesokwandu/.rbenv/versions/jruby-1.7.3/lib/ruby/gems/shared/gems/rack-protection-1.5.0/lib/rack/protection/base.rb:49:in `call'
+	/Users/charlesokwandu/.rbenv/versions/jruby-1.7.3/lib/ruby/gems/shared/gems/rack-protection-1.5.0/lib/rack/protection/base.rb:49:in `call'
+	/Users/charlesokwandu/.rbenv/versions/jruby-1.7.3/lib/ruby/gems/shared/gems/rack-protection-1.5.0/lib/rack/protection/frame_options.rb:31:in `call'
+	/Users/charlesokwandu/.rbenv/versions/jruby-1.7.3/lib/ruby/gems/shared/gems/rack-1.5.2/lib/rack/nulllogger.rb:9:in `call'
+	/Users/charlesokwandu/.rbenv/versions/jruby-1.7.3/lib/ruby/gems/shared/gems/rack-1.5.2/lib/rack/head.rb:11:in `call'
+	/Users/charlesokwandu/.rbenv/versions/jruby-1.7.3/lib/ruby/gems/shared/gems/sinatra-1.4.2/lib/sinatra/showexceptions.rb:21:in `call'
+	/Users/charlesokwandu/.rbenv/versions/jruby-1.7.3/lib/ruby/gems/shared/gems/sinatra-1.4.2/lib/sinatra/base.rb:172:in `call'
+	/Users/charlesokwandu/.rbenv/versions/jruby-1.7.3/lib/ruby/gems/shared/gems/sinatra-1.4.2/lib/sinatra/base.rb:1947:in `call'
+	/Users/charlesokwandu/.rbenv/versions/jruby-1.7.3/lib/ruby/gems/shared/gems/sinatra-1.4.2/lib/sinatra/base.rb:1610:in `call'
+	/Users/charlesokwandu/.rbenv/versions/jruby-1.7.3/lib/ruby/gems/shared/gems/sinatra-1.4.2/lib/sinatra/base.rb:1693:in `synchronize'
+	/Users/charlesokwandu/.rbenv/versions/jruby-1.7.3/lib/ruby/gems/shared/gems/sinatra-1.4.2/lib/sinatra/base.rb:1610:in `call'
+	file:/Users/charlesokwandu/.rbenv/versions/jruby-1.7.3/lib/ruby/gems/shared/gems/jruby-rack-1.1.13.2/lib/jruby-rack-1.1.13.2.jar!/rack/handler/servlet.rb:22:in `call'
+2013-05-22 03:26:33 +0100 INFO: jruby 1.7.3 (1.9.3p385) 2013-02-21 dac429b on Java HotSpot(TM) 64-Bit Server VM 1.6.0_33-b03-424-11M3720 [darwin-x86_64]
+2013-05-22 03:26:33 +0100 INFO: using 1:5 runtime pool with acquire timeout of 5.0 seconds
+2013-05-22 03:26:52 +0100 INFO: added application to pool, size now = 1
+2013-05-22 03:30:24 +0100 INFO: jruby 1.7.3 (1.9.3p385) 2013-02-21 dac429b on Java HotSpot(TM) 64-Bit Server VM 1.6.0_33-b03-424-11M3720 [darwin-x86_64]
+2013-05-22 03:30:24 +0100 INFO: using 1:5 runtime pool with acquire timeout of 5.0 seconds
+2013-05-22 03:30:37 +0100 INFO: added application to pool, size now = 1
+2013-05-22 03:41:07 +0100 INFO: jruby 1.7.3 (1.9.3p385) 2013-02-21 dac429b on Java HotSpot(TM) 64-Bit Server VM 1.6.0_33-b03-424-11M3720 [darwin-x86_64]
+2013-05-22 03:41:07 +0100 INFO: using 1:5 runtime pool with acquire timeout of 5.0 seconds
+2013-05-22 03:41:16 +0100 INFO: added application to pool, size now = 1
+2013-05-22 09:21:58 +0100 INFO: jruby 1.7.3 (1.9.3p385) 2013-02-21 dac429b on Java HotSpot(TM) 64-Bit Server VM 1.6.0_33-b03-424-11M3720 [darwin-x86_64]
+2013-05-22 09:21:58 +0100 INFO: using 1:5 runtime pool with acquire timeout of 5.0 seconds
+2013-05-22 09:22:07 +0100 INFO: added application to pool, size now = 1
