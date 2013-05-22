@@ -16,3 +16,5 @@ I, [2013-05-21T18:27:07.652000 #4343]  INFO -- : Active user id 6
 I, [2013-05-21T18:27:15.195000 #4343]  INFO -- : Active user id 7
 I, [2013-05-21T18:27:23.411000 #4343]  INFO -- : Active user id 8
 I, [2013-05-21T18:28:07.448000 #4343]  INFO -- : Active user id 9
+I, [2013-05-22T01:08:33.842000 #13056]  INFO -- : INITIALIZING
+I, [2013-05-22T01:08:34.216000 #13056]  INFO -- : localhost 8888 push development

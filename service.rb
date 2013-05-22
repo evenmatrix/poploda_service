@@ -6,7 +6,8 @@ require 'active_record'
 require 'logger'
 require 'yaml'
 require "models/active_user"
-require "poploda_service"
+require "#{File.dirname(__FILE__)}/models/active_user"
+require "#{File.dirname(__FILE__)}/poploda_service"
 
 
 class Service < Sinatra::Base
@@ -14,8 +15,8 @@ class Service < Sinatra::Base
   configure do
     puts "STARTING"
     ActiveRecord::ConnectionAdapters::ConnectionManagement
-    databases = YAML.load_file("config/database.yml")
-    poploda_config = YAML.load_file("config/poploda.yml")
+    databases = YAML.load_file(File.join(File.dirname(__FILE__), "config/database.yml"))
+    poploda_config = YAML.load_file(File.join(File.dirname(__FILE__),"config/poploda.yml"))
     ActiveRecord::Base.establish_connection(databases[poploda_config['env']])
     @service= PoplodaService.instance
     @service.start

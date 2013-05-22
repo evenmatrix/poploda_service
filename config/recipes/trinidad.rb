@@ -16,7 +16,7 @@ set_default :trinidad_init_config do
     "ruby_compat_version" => "RUBY1_9",
     "jsvc_path" => "/usr/bin/jsvc",
     "java_home" =>"/usr/lib/jvm/java-7-oracle/jre",
-    "jruby_home" => "/home/#{user}/.rbenv/versions/#{ruby_version}",
+    "jruby_home" => "/home/#{user}/.rbenv/versions/jruby-1.7.3",
     "pid_file" => "#{shared_path}/pids/trinidad.pid",
     "log_file" => "#{shared_path}/log/trinidad.log",
     "output_path" => "/tmp" # move later using sudo
