@@ -2,6 +2,7 @@ require 'rubygems'
 require 'active_record'
 require 'yaml'
 require 'logger'
+require 'torquebox-rake-support'
 desc "Load the environment"
 task :environment do
   env = ENV["SINATRA_ENV"] || "development"

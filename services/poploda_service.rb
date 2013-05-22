@@ -1,5 +1,5 @@
-$LOAD_PATH  << './lib'
-require "singleton"
+$LOAD_PATH  << '../lib'
+#require "singleton"
 require 'rubygems'
 require 'active_record'
 require 'bundler/setup'
@@ -10,18 +10,17 @@ require 'logger'
   require "#{name}.jar"
 end
 
-require_relative 'poploda_notifications'
+require_relative '../poploda_notifications'
 
 include Java
 import org.jivesoftware.whack.ExternalComponentManager
 import org.xmpp.component.ComponentException
 
 class PoplodaService
-  include Singleton
-
-
-   def initialize(opts={})
-    config =YAML.load_file("config/branch.yml")
+  attr_reader   :host,:port
+  NS_NOTIFICATION = 'http://poploda.com/notifications'
+  
+  def initialize(opts={})
     puts "INITIALIZING"
     @host=opts["server_host"]||'rzaartz.local'
     @port=opts["server_port"]||8888

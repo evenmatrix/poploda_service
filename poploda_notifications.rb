@@ -1,7 +1,8 @@
 require 'rubygems'
 require 'active_record'
+require 'action_view'
+require 'redis'
 require 'json'
-require 'logger'
 include Java
 import org.xmpp.component.AbstractComponent
 import org.xmpp.packet.IQ
@@ -86,7 +87,6 @@ class  PoplodaNotificationsComponent <  AbstractComponent
   end
 
   def handle_error_message(message)
-    puts "ERROR MESSAGE #{message.to_xml}"
   end
 
   def handle_group_chat_message(message)
@@ -94,11 +94,13 @@ class  PoplodaNotificationsComponent <  AbstractComponent
   end
 
   def send_notification(jid,message)
+  @logger.info "sending:#{message.to_xml}"
+    #jid=@redis.hget("users:#{phone_number}","jid")
     if(!jid.nil?)
       from_jid= JID.new(@domain)
       message.to=JID.new(jid)
       message.from=from_jid
-      puts "sending:#{message.to_xml}"
+      @logger.info "sending:#{message.to_xml}"
       send(message)
     end
   end
@@ -165,12 +167,8 @@ class  PoplodaNotificationsComponent <  AbstractComponent
     else
       active_user=ActiveUser.create({:jid=>from.to_s,:phone_number=>phone_number})
     end
-    message=Message.new
-    message.setBody("we got ur presence")
-    message.from=to
-    message.to=from
-    puts "sending #{message.to_xml}"
-    send message
+    @logger.info "Active user id #{active_user.id}"
+    #@redis.hset("users:#{phone_number}","jid",from.to_s)
   end
 
   def handle_presence_error(presence)
@@ -191,11 +189,16 @@ class  PoplodaNotificationsComponent <  AbstractComponent
 
   
   def set_up_logger(log_path)
+    if @env == "development"
+      @logger = TorqueBox::Logger.new( self.class )
+    end 
+    if @env == "production"
       path = File.join(log_path, 'poploda.log')
       file = File.open(path, File::WRONLY | File::APPEND | File::CREAT)
       file.sync = true
       @logger = Logger.new(file)
       @logger.level = Logger::DEBUG
+    end
   end
 
   def close_connection

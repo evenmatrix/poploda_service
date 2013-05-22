@@ -1,30 +1,31 @@
+require 'torquebox-capistrano-support'
 require 'bundler/capistrano'
 
 load "config/recipes/base"
-load "config/recipes/nginx"
 load "config/recipes/poploda"
-#load "config/recipes/postgresql"
-load "config/recipes/trinidad"
+load "config/recipes/postgresql"
 
 server "poploda.com", :web, :app, :db, primary: true
 
-set :application, "poploda_service"
-set :user, "deployer"
-set :deploy_to, "/home/#{user}/apps/#{application}"
-set :deploy_via, :remote_cache
-set :use_sudo, false
-
+# SCM
+set :deployer, "deployer"
+set :application,"poploda_service"
+set :user, "root"
 set :scm, "git"
 set :repository, "git@github.com:evenmatrix/#{application}.git"
-set :scm_username, "evenmatrix@gmail.com"
+set :scm_verbose,       true
+set :use_sudo,          false
 set :branch, "master"
-set :git_enable_submodules, 1
 
+# Production server
+set :deploy_to, "/home/#{deployer}/apps/#{application}"
+set :jboss_init_script, "/etc/init.d/jboss-as-standalone"
+set :rails_env,         "production"
+set :app_context,       "/"
+set :torquebox_home,    '/opt/torquebox/current'
 
 default_run_options[:pty] = true
 ssh_options[:forward_agent] = true
-ssh_options[:paranoid] = true
 
-after "deploy", "deploy:cleanup" # keep only the last 5 releases
-
+after "deploy", "deploy:cleanup"
 

@@ -1,4 +1,4 @@
 require File.join(File.dirname(__FILE__), 'service')
 set :run, false
-set :environment, :development
+set :environment, :production
 run Service

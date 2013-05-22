@@ -1,0 +1,14 @@
+environment:
+    db: development
+services:
+  PoplodaService:
+    config:
+      name: poploda
+      server_host: <%= server_host %>
+      server_port: <%= server_port %>
+      sub_domain: <%= sub_domain %>
+	  domain: push.poploda.com
+	  secret: <%= secret %>
+      env: <%= env %>
+      db: <%= shared_path %>/config/
+      log_path: <%= shared_path %>/log/
