@@ -9,15 +9,9 @@ class User < ActiveRecord::Base
   has_many :orders
 
   validates :phone_number, :presence => true, :uniqueness => true
-  scope :no_wallet, -> {where(:wallet_id => nil)}
-
   validates_numericality_of :phone_number
 
   validates_length_of :phone_number, is: 11, :message => 'Invalid Phone Number'
-
-  scope :weekly_mail_to_users, where("subscription_duration = ?", "weekly")
-  scope :monthly_mail_to_users, where("subscription_duration = ?", "monthly")
-  scope :daily_mail_to_users, where("subscription_duration = ?", "daily")
 
   has_one :wallet
   after_create :create_wallet

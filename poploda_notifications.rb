@@ -14,9 +14,11 @@ import org.xmpp.component.ComponentException
 import org.dom4j.Element;
 
 require "#{File.dirname(__FILE__)}/models/active_user"
+require "#{File.dirname(__FILE__)}/models/user"
 
 class  PoplodaNotificationsComponent <  AbstractComponent
   NS_NOTIFICATIONS = "http://poploda.com/notifications"
+  NS_PRESENCE = "http://poploda.com/presence"
   #NS_NOTIFICATION_ITEM = "http://poploda.com/notifications/item"
 
   
@@ -127,16 +129,63 @@ class  PoplodaNotificationsComponent <  AbstractComponent
   end
 
   def handleIQError(iq)
+    puts "ERROR set"
   end
 
-  def handleIQGet(iq)
-
+  def handleIQGet(iq)   
   end
 
   def handleIQSet(iq)
-
+    puts "IQ set"
+    begin
+      puts "iq to #{iq.to}"
+      puts "iq from:#{iq.from}"
+      elem=iq.child_element
+      name=elem.name
+      result=nil
+      if name=="presence"
+        result=do_presence_iq iq
+      end
+      result
+    rescue Exception => e
+      @logger.error "Error :,#{e.message}"
+      @logger.error $!.backtrace.collect { |b| " > #{b}" }.join("\n")
+    ensure
+      close_connection
+    end
   end
 
+  def do_presence_iq(iq)
+    puts "to #{iq.to}"
+    puts"from:#{iq.from}"
+    to = iq.to;
+    from= iq.from
+    phone_number= to.node;
+    result=IQ::createResultIQ iq
+    elem=iq.child_element
+    begin
+      user= User.find_by_phone_number(phone_number)
+      if(user)
+        active_user=ActiveUser.find_by_phone_number(phone_number)
+          if active_user
+              active_user.jid=from.to_s
+              active_user.save
+          else
+              active_user=ActiveUser.create({:jid=>from.to_s,:phone_number=>phone_number})
+          end
+          @logger.info "Active user id #{active_user.id}"
+      else
+        #not-found-error
+        result=create_error iq,Condition::item_not_found 
+        puts "callee not found #{result.to_xml}"
+      end
+    rescue Exception => e
+      @logger.error "Error :,#{e.message}"
+      @logger.error $!.backtrace.collect { |b| " > #{b}" }.join("\n")
+    end
+     result
+  end
+  
   def handle_unavailable_presence(presence)
     puts "to #{presence.to}"
     puts "from:#{presence.from}"
@@ -153,6 +202,10 @@ class  PoplodaNotificationsComponent <  AbstractComponent
   end
 
   def available_presence(presence)
+    #on_presence(presence)
+  end
+
+  def on_presence(presence)
     puts "to #{presence.to}"
     puts "from:#{presence.from}"
     puts "presence_type:#{presence.type}"
@@ -168,9 +221,8 @@ class  PoplodaNotificationsComponent <  AbstractComponent
       active_user=ActiveUser.create({:jid=>from.to_s,:phone_number=>phone_number})
     end
     @logger.info "Active user id #{active_user.id}"
-    #@redis.hset("users:#{phone_number}","jid",from.to_s)
   end
-
+  
   def handle_presence_error(presence)
   end
   
@@ -203,5 +255,13 @@ class  PoplodaNotificationsComponent <  AbstractComponent
 
   def close_connection
     ActiveRecord::Base.connection.close
+  end
+  
+  def create_error(iq,condition)
+    result = IQ.new(IQ::Type::error, iq.id);
+    result.from=iq.to
+    result.to=iq.from
+    result.error=condition
+    result
   end
 end
